@@ -1,0 +1,16 @@
+{
+  // Java verticle
+  "main":"PushCollector",
+  "auto-redeploy": true,
+
+  // If your module is going to be registered in the Vert.x module registry you will also need the following
+  // mandatory fields
+  "description":"Put description of your module here",
+  "licenses": ["The Apache Software License Version 2.0"],
+  "author": "Kenichiro Murata",
+
+  // Optional fields
+  "developers": [],
+  "keywords": ["vert.x", "module", "java", "gradle"],
+  "homepage": "https://github.com/muraken720/vert.x-module-template-for-java"
+}
