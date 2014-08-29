@@ -7,7 +7,7 @@ import org.vertx.java.core.json.JsonObject;
 import org.vertx.java.platform.Verticle;
 
 import Handler.CustomLogHandler;
-import Handler.MySqlConnector;
+import Handler.MySqlHandler;
 
 public class PushCollector extends Verticle
 {
@@ -24,15 +24,14 @@ public class PushCollector extends Verticle
 		server.requestHandler(matcher).listen(PORT, HOST);
 
 		//register handler
-		eventbus.registerHandler("mysql.handler", new MySqlConnector(container));
-		eventbus.registerHandler("customlogger.handler", new CustomLogHandler());		
+		eventbus.registerHandler("mysql.handler", new MySqlHandler(container));
+		eventbus.registerHandler("customlogger.handler", new CustomLogHandler());
 
 		container.logger().info("-------------------------------------------");
 		container.logger().info(" vert.x collector server started ");
 		container.logger().info("-------------------------------------------");
 	}
 
-	
 	/**
 	 * Restful APIs
 	 **/
@@ -91,11 +90,11 @@ public class PushCollector extends Verticle
 				String mNo = req.params().get("mNo");
 //				System.out.println(type +" / "+ campaign +" / "+ token +" / "+ mNo);
 
-//			 	if(type == null || campaign == null || token == null)
-//			 	{
-//			 		System.out.println("식별할수없는 요청.");
-//			 		return;
-//			 	}
+			 	if(type == null || campaign == null || token == null)
+			 	{
+			 		System.out.println("식별할수없는 요청.");
+			 		return;
+			 	}
 
 				//logfile
 			 	JsonObject wrapper = new JsonObject();
