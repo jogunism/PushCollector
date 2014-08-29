@@ -75,6 +75,8 @@ public class PushCollector extends Verticle
 			 		return;
 			 	}
 
+			 	
+
 			 	//logfile
 			 	//insert to db
 			}
