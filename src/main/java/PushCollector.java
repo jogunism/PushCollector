@@ -67,15 +67,13 @@ public class PushCollector extends Verticle
 				String mNo = req.params().get("mNo");
 				String isSuccess = req.params().get("isSuccess");				
 
-				System.out.println(type +" / "+ campaign +" / "+ token +" / "+ mNo +" / "+ isSuccess);
+//				System.out.println(type +" / "+ campaign +" / "+ token +" / "+ mNo +" / "+ isSuccess);
 
 			 	if(type == null || campaign == null || token == null)
 			 	{
 			 		System.out.println("식별할수없는 요청.");
 			 		return;
 			 	}
-
-			 	
 
 			 	//logfile
 			 	//insert to db
