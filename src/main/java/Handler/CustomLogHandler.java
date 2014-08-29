@@ -14,38 +14,47 @@ import ch.qos.logback.core.FileAppender;
 public class CustomLogHandler implements Handler<Message<JsonObject>>
 {
 	@Override
-	public void handle(Message<JsonObject> wrapper) {
+	public void handle(Message<JsonObject> wrapper)
+	{
 
-		LoggerContext loggercontext = (LoggerContext)LoggerFactory.getILoggerFactory();
+		LoggerContext loggercontext = null;
+		PatternLayoutEncoder encoder = null;
+		FileAppender<ILoggingEvent> fileappender = null;
+		Logger logger = null;
 
-		PatternLayoutEncoder encoder = new PatternLayoutEncoder();
-		encoder.setContext(loggercontext);
-		encoder.setPattern("%d{HH:mm:ss.SSS} %-5level%msg%n");
-		encoder.start();
+		try
+		{
+			loggercontext = (LoggerContext)LoggerFactory.getILoggerFactory();
 
-		FileAppender<ILoggingEvent> fileappender = new FileAppender<ILoggingEvent>();
-		fileappender.setContext(loggercontext);
-		fileappender.setName("timestamp");
-		fileappender.setFile(".logs/"+ wrapper.body().getString("type") +"_"+ wrapper.body().getNumber("campaign") +".log");
-		fileappender.setEncoder(encoder);
-		fileappender.start();
+			encoder = new PatternLayoutEncoder();
+			encoder.setContext(loggercontext);
+			encoder.setPattern("%d{HH:mm:ss.SSS} %-5level%msg%n");
+			encoder.start();
 
-		Logger logger = loggercontext.getLogger("Main");
-		logger.addAppender(fileappender);
+			fileappender = new FileAppender<ILoggingEvent>();
+			fileappender.setContext(loggercontext);
+			fileappender.setName("timestamp");
+			fileappender.setFile(".logs/"+ wrapper.body().getString("type") +"_"+ wrapper.body().getNumber("campaign") +".log");
+			fileappender.setEncoder(encoder);
+			fileappender.start();
 
-		//add raw
-		String logstring = wrapper.body().getString("mNo")+"|"+wrapper.body().getString("token");
-		System.out.println(logstring);
-		logger.info(logstring);
+			logger = loggercontext.getLogger("Main");
+			logger.addAppender(fileappender);
 
-
-		fileappender.stop();
-
-		loggercontext = null;
-		encoder = null;
-		fileappender = null;
-		logger = null;
-		
+			//add raw
+			String logstring = wrapper.body().getString("mNo")+"|"+wrapper.body().getString("token");
+			System.out.println(logstring);
+			logger.info(logstring);
+		}
+		finally
+		{
+			fileappender.stop();
+			
+			loggercontext = null;
+			encoder = null;
+			fileappender = null;
+			logger = null;
+		}
 		
 	}
 }
