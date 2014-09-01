@@ -109,6 +109,7 @@ public class PushCollector extends Verticle
 			 	String jsonstring = new JsonObject().putString("status", "ok").toString();
 			 	req.response().putHeader("Content-Type", "application/json");
 			 	req.response().end(jsonstring);
+			 	req.response().close();
 			}
 		});
 
